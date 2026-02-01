@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Surprise ❤️</title>
+    <title>For My Favorite Person ❤️</title>
     <style>
         body {
             display: flex;
@@ -13,9 +13,7 @@
             margin: 0;
             background-color: #ffe6e6;
             font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
         }
-
         .container {
             background-color: white;
             padding: 30px;
@@ -25,52 +23,31 @@
             max-width: 350px;
             width: 90%;
         }
-
-        h1 { color: #ff4d6d; font-size: 1.6rem; margin: 15px 0; }
-
+        h1 { color: #ff4d6d; font-size: 1.5rem; }
         .gif-container img {
-            width: 180px;
-            height: auto;
-            border-radius: 10px;
+            width: 100%;
+            max-width: 200px;
+            border-radius: 15px;
         }
-
         .buttons {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 20px;
             margin-top: 20px;
             position: relative;
-            min-height: 50px;
+            height: 50px;
         }
-
         button {
-            padding: 12px 25px;
+            padding: 10px 25px;
             font-size: 1rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
         }
-
         #yesBtn { background-color: #ff4d6d; color: white; }
-        
-        #noBtn { 
-            background-color: #adb5bd; 
-            color: white; 
-            position: absolute; 
-            white-space: nowrap;
-        }
-
-        #countdown {
-            margin-top: 25px;
-            font-size: 0.85rem;
-            color: #ff85a1;
-        }
-
-        .success-msg { animation: fadeIn 1s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #noBtn { background-color: #adb5bd; color: white; position: absolute; }
+        #countdown { margin-top: 25px; color: #ff85a1; font-weight: bold; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -78,12 +55,12 @@
     <div class="container" id="mainContainer">
         <div id="contentArea">
             <div class="gif-container">
-                <img src="https://media.tenor.com/9P-Yp6oMv74AAAAi/bubu-dudu-bubu.gif" alt="Asking">
+                <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODZ3ZndqZ3RreXp6Z3RreXp6Z3RreXp6Z3RreXp6Z3RreSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Asking">
             </div>
             <h1>Will you be my Valentine? ❤️</h1>
             <div class="buttons">
                 <button id="yesBtn">Yes!</button>
-                <button id="noBtn" style="left: 180px;">No</button>
+                <button id="noBtn" style="left: 170px;">No</button>
             </div>
         </div>
         <div id="countdown"></div>
@@ -94,8 +71,8 @@
         const yesBtn = document.getElementById('yesBtn');
         const contentArea = document.getElementById('contentArea');
 
-        // Move the "No" button
-        function moveNoButton() {
+        // Move the NO button
+        function moveNo() {
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
@@ -103,40 +80,28 @@
             noBtn.style.top = y + 'px';
         }
 
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents accidental clicking on mobile
-            moveNoButton();
-        });
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('touchstart', moveNo);
 
-        // Click "Yes"
+        // Success state
         yesBtn.addEventListener('click', () => {
             contentArea.innerHTML = `
-                <div class="success-msg">
-                    <img src="https://media.tenor.com/An9_p6K9_78AAAAi/bubu-dudu-kiss.gif" alt="Kissing" style="width:180px">
-                    <h1>Yay! I love you! 🥰</h1>
-                    <p style="color: #ff4d6d; font-style: italic;">P.S. You're stuck with me now!</p>
-                </div>
+                <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJ6ZnMxeGZ6ZnMxeGZ6ZnMxeGZ6ZnMxeGZ6ZnMxeGZ6ZnMxeGZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/K6jS2S6v_7WId8K362/giphy.gif" alt="Happy">
+                <h1>Yay! I love you! 🥰</h1>
+                <p style="color: #ff4d6d; font-style: italic;">P.S. Can't wait to see you.</p>
             `;
         });
 
-        // Countdown Timer
-        function updateCountdown() {
-            const now = new Date();
-            const year = now.getFullYear();
-            let target = new Date(`February 14, ${year} 00:00:00`);
-            if (now > target) target = new Date(`February 14, ${year + 1} 00:00:00`);
-
-            const diff = target - now;
+        // Countdown
+        function updateTimer() {
+            const diff = new Date("February 14, 2026 00:00:00") - new Date();
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const m = Math.floor((diff / 1000 / 60) % 60);
-
-            document.getElementById('countdown').innerHTML = `Only ${d}d ${h}h ${m}m left! 🌹`;
+            document.getElementById('countdown').innerHTML = `Only ${d}d ${h}h ${m}m until our day! 🌹`;
         }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        setInterval(updateTimer, 1000);
+        updateTimer();
     </script>
 </body>
 </html>
